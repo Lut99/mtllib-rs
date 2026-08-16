@@ -35,7 +35,7 @@ pub struct Color {
 #[derive(Clone, Debug)]
 pub struct Mtl {
     /// A list of materials, mapped by name.
-    pub mats: HashMap<String, Material>,
+    pub mtls: HashMap<String, Material>,
 }
 
 
@@ -81,7 +81,30 @@ pub struct Material {
 
     // Miscellaneous
     /// Lighting model.
-    pub model: IlluminationModel,
+    pub model: Option<IlluminationModel>,
+}
+impl Default for Material {
+    #[inline]
+    fn default() -> Self {
+        Self {
+            color_ambient: None,
+            color_diffuse: None,
+            color_specular: None,
+            weight_specular: None,
+            transparency: None,
+            transmission_filter_color: None,
+            refraction_index: None,
+            map_color_ambient: None,
+            map_color_diffuse: None,
+            map_color_specular: None,
+            map_alpha: None,
+            map_bump: None,
+            map_disp: None,
+            map_refl: None,
+            map_stencil: None,
+            model: None,
+        }
+    }
 }
 
 
