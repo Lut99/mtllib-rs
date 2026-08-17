@@ -142,11 +142,11 @@ impl<R: Read> Parser<R> {
         let mut s = vec![b];
         while let Some((_, b)) = self.next()? {
             if b == b'\n' {
-                return Ok(Some(String::from_utf8_lossy(&s).into()));
+                return Ok(Some(String::from_utf8_lossy(&s).trim().into()));
             }
             s.push(b);
         }
-        Ok(Some(String::from_utf8_lossy(&s).into()))
+        Ok(Some(String::from_utf8_lossy(&s).trim().into()))
     }
 
     /// Pop a single (unsigned) integer number off the stream.
@@ -186,11 +186,11 @@ impl<R: Read> Parser<R> {
         let mut raw = vec![b];
         while let Some((_, b)) = self.next()? {
             if (b < b'0' || b > b'9') && b != b'.' {
-                return Ok(Some(f64::from_str(&String::from_utf8_lossy(&raw)).map_err(|err| Error::F64Value { raw, err })?));
+                return Ok(Some(f64::from_str(String::from_utf8_lossy(&raw).trim()).map_err(|err| Error::F64Value { raw, err })?));
             }
             raw.push(b);
         }
-        Ok(Some(f64::from_str(&String::from_utf8_lossy(&raw)).map_err(|err| Error::F64Value { raw, err })?))
+        Ok(Some(f64::from_str(String::from_utf8_lossy(&raw).trim()).map_err(|err| Error::F64Value { raw, err })?))
     }
 }
 
