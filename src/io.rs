@@ -164,11 +164,11 @@ impl<R: Read> Parser<R> {
         let mut raw = vec![b];
         while let Some((_, b)) = self.next()? {
             if b < b'0' || b > b'9' {
-                return Ok(Some(u32::from_str(&String::from_utf8_lossy(&raw)).map_err(|err| Error::U32Value { raw, err })?));
+                return Ok(Some(u32::from_str(String::from_utf8_lossy(&raw).trim()).map_err(|err| Error::U32Value { raw, err })?));
             }
             raw.push(b);
         }
-        Ok(Some(u32::from_str(&String::from_utf8_lossy(&raw)).map_err(|err| Error::U32Value { raw, err })?))
+        Ok(Some(u32::from_str(String::from_utf8_lossy(&raw).trim()).map_err(|err| Error::U32Value { raw, err })?))
     }
 
     /// Pop a single floating-point number off the stream.
