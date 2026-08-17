@@ -9,9 +9,12 @@
 #[cfg(feature = "io")]
 mod io;
 
-// Imports
+// Imports & Exports
 use std::collections::HashMap;
 use std::path::PathBuf;
+
+#[cfg(feature = "io")]
+pub use io::Error;
 
 
 /***** AUXILLARY *****/
